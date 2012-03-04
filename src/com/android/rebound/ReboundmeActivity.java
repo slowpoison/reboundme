@@ -6,6 +6,7 @@ import java.util.logging.Logger;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.widget.Toast;
 
@@ -42,11 +43,16 @@ public class ReboundmeActivity extends Activity {
 			accessToken = data.getStringExtra("access_token");
 			logger.info("Got access token " + accessToken);
 			
-			Intent home = new Intent(this, Signin.class);
+			SharedPreferences prefs = getPreferences(MODE_PRIVATE);
+			Editor e = prefs.edit();
+			e.putString(ACCESS_TOKEN, accessToken);
+			e.commit();
+			
+			Intent home = new Intent(this, Home.class);
 			startActivity(home);
 		} else {
 			String error = data.getStringExtra("error");
-			Toast.makeText(this, error, Toast.LENGTH_SHORT);
+			Toast.makeText(this, error, Toast.LENGTH_LONG);
 			error(error);
 			finish();
 		}

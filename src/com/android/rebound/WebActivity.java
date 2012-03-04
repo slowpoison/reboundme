@@ -52,7 +52,7 @@ public class WebActivity extends Activity {
 					for (int i=0; i < tokens.length; ++i) {
 						if (tokens[i].equals("code")) {
 							ret.putExtra("RESULT_STRING", tokens[i+1]);
-							Toast.makeText(WebActivity.this, "Returning " + tokens[i+1], Toast.LENGTH_SHORT).show();
+//							Toast.makeText(WebActivity.this, "Returning " + tokens[i+1], Toast.LENGTH_SHORT).show();
 							setResult(RESULT_OK, ret);
 							finish();
 						}

@@ -1,16 +1,8 @@
 package com.android.rebound;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.apache.http.HttpResponse;
-import org.apache.http.NameValuePair;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.HttpRequest;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -19,10 +11,14 @@ import org.json.JSONTokener;
 public class Hgraph {
 	private static HttpGet newGetRequest(String url) {
 		HttpGet req = new HttpGet("http://api.runkeeper.com/" + url);
+		addMandatoryHeaders(req);
+		return req;
+	}
+	
+	private static void addMandatoryHeaders(HttpRequest req) {
 		req.addHeader("Host", "api.runkeeper.com");
 		req.addHeader("Authorization", "Bearer " + ReboundmeActivity.getAccessToken());
 		req.addHeader("Accept", "application/vnd.com.runkeeper.StrengthTrainingActivityFeed+json");
-		return req;
 	}
 	
 	public static HActivity[] getAllActivities() {
@@ -36,7 +32,7 @@ public class Hgraph {
 		return parseActivies(Helper.httpGet(newGetRequest("strengthTrainingActivities")));
 	}
 	
-	public static void addActivity(String exercise, String repetitions) {
+	public static void addActivity(String exercise, int repetitions) {
 		HActivity act = new HActivity(exercise, repetitions);
 		Helper.httpPost(newHttpPost("strengthTrainingActivities"), act.toJSON());
 	}
@@ -44,9 +40,7 @@ public class Hgraph {
 	
 	private static HttpPost newHttpPost(String url) {
 		HttpPost req = new HttpPost(url);
-		req.addHeader("Host", "api.runkeeper.com");
-		req.addHeader("Authorization", "Bearer " + ReboundmeActivity.getAccessToken());
-		req.addHeader("Accept", "application/vnd.com.runkeeper.StrengthTrainingActivityFeed+json");
+		addMandatoryHeaders(req);
 		
 		/*
 		List<NameValuePair> params = new ArrayList<NameValuePair>();
