@@ -32,7 +32,7 @@ public class Signin extends Activity {
 	}
 	
 	public void doSensorStuff(View v) {
-		Intent doSensorStuff = new Intent(this, ExerciseActivity.class);
+		Intent doSensorStuff = new Intent(this, Home.class);
 		startActivity(doSensorStuff);
 	}
 	
