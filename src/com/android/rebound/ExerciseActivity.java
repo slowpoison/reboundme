@@ -19,11 +19,11 @@ import android.widget.TextView;
 
 public class ExerciseActivity extends Activity implements SensorEventListener, TextToSpeech.OnInitListener {
 	SensorManager sensorManager = null;
-/*	private float[] initialRotationM = new float[9];
+	/*	private float[] initialRotationM = new float[9];
 	private float[] currentRotationM = new float[9];
 	private float[] tempOrientation = new float[3];
 	private float[] tempMagnetic = new float[3];*/
-	
+
 	float zangle=0;
 	float yangle=0;
 	float xangle=0;
@@ -45,16 +45,18 @@ public class ExerciseActivity extends Activity implements SensorEventListener, T
 	
     private Sensor mRotationVectorSensor;
 
+
+
 	private float[] angle = new float[3];
 	private int button_pressed;
-	
+
 	//private Vibrator v;
 
 	private static final String TAG = "TextToSpeechDemo";
 
 	private TextToSpeech mTts;
 	private Button mAgainButton;
-	
+
 	int count = 0;
 	Button button;
 
@@ -73,12 +75,13 @@ public class ExerciseActivity extends Activity implements SensorEventListener, T
 	TextView outputY3;
 	TextView outputZ3;
 	
-    private final float[] mRotationMatrix = new float[16];
+
+	private final float[] mRotationMatrix = new float[16];
 	float movavgnum=100;
 	float movavg=0;
 	float movavgmax=0;
 	float movavgmin=0;
-	
+
 	float tempsum=0;
 	float upthreshmax = (float) 0.006;
 	float upthreshmin = (float) 0.003;
@@ -88,7 +91,6 @@ public class ExerciseActivity extends Activity implements SensorEventListener, T
 	boolean updetect=false;
 	boolean downdetect=false;
 	boolean reset=true;
-
 
 	ArrayList<Float> xHist = new ArrayList<Float>(); 
 	ArrayList<Float> yHist = new ArrayList<Float>();
@@ -104,23 +106,23 @@ public class ExerciseActivity extends Activity implements SensorEventListener, T
 			//v.vibrate(100);
 		}
 	}
-	
+
 	void CalcAngVel() {
-        if (zHist.size()>2) {
-        	xVel.add(xHist.get(xHist.size()-1) - xHist.get(xHist.size()-2));
-        	yVel.add(yHist.get(yHist.size()-1) - yHist.get(yHist.size()-2));
-        	zVel.add(zHist.get(zHist.size()-1) - zHist.get(zHist.size()-2));
-        }
+		if (zHist.size()>2) {
+			xVel.add(xHist.get(xHist.size()-1) - xHist.get(xHist.size()-2));
+			yVel.add(yHist.get(yHist.size()-1) - yHist.get(yHist.size()-2));
+			zVel.add(zHist.get(zHist.size()-1) - zHist.get(zHist.size()-2));
+		}
 	}
 
 	private float CalcMovAvgAngVel() {
-        tempsum=0;
+		tempsum=0;
         if (zVel.size()>movavgnum)
         for (int i = 1;i<movavgnum;i++) {
                 tempsum = tempsum+zVel.get(zVel.size()-i);
         }
         return tempsum/movavgnum;
-	}
+  	}
 
 	
 	private float CalcAvgAngVel(int range) {
@@ -141,17 +143,17 @@ public class ExerciseActivity extends Activity implements SensorEventListener, T
 
 		sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
 		setContentView(R.layout.main);
-		
-        mRotationMatrix[ 0] = 1;
-        mRotationMatrix[ 4] = 1;
-        mRotationMatrix[ 8] = 1;
-        mRotationMatrix[12] = 1;
-        
-        mTts = new TextToSpeech(this,
-                this ); // TextToSpeech.OnInitListener
-		
-		
-		//v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+
+		mRotationMatrix[ 0] = 1;
+		mRotationMatrix[ 4] = 1;
+		mRotationMatrix[ 8] = 1;
+		mRotationMatrix[12] = 1;
+
+		mTts = new TextToSpeech(this,
+				this ); // TextToSpeech.OnInitListener
+
+
+				//v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
 
 		button = (Button) findViewById(R.id.button1);
 		button_pressed = 0;
@@ -167,8 +169,8 @@ public class ExerciseActivity extends Activity implements SensorEventListener, T
 			}
 		});
 
-//		tempMagnetic[0] = tempMagnetic[1] = tempMagnetic[2] = -1;
-//		tempOrientation[0] = tempOrientation[1] = tempOrientation[2] = -1;
+		//		tempMagnetic[0] = tempMagnetic[1] = tempMagnetic[2] = -1;
+		//		tempOrientation[0] = tempOrientation[1] = tempOrientation[2] = -1;
 
 		// just some textviews, for data output
 		outputX = (TextView) findViewById(R.id.textView1);
@@ -210,9 +212,9 @@ public class ExerciseActivity extends Activity implements SensorEventListener, T
 		sensorManager.registerListener(this,
 				sensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD),
 				sensorManager.SENSOR_DELAY_GAME);
-        sensorManager.registerListener(this,
-        		sensorManager.getDefaultSensor(Sensor.TYPE_ROTATION_VECTOR),
-        		1000);///update once a milisecond
+		sensorManager.registerListener(this,
+				sensorManager.getDefaultSensor(Sensor.TYPE_ROTATION_VECTOR),
+				1000);///update once a milisecond
 	}
 
 	@Override
@@ -233,17 +235,17 @@ public class ExerciseActivity extends Activity implements SensorEventListener, T
 				outputZ.setText("z:" + Float.toString(event.values[2]));
 				break;
 			case Sensor.TYPE_ORIENTATION:
-			//	System.arraycopy(event.values, 0, tempOrientation, 0, 3);
-			//	outputX2.setText("x:" + Float.toString(event.values[0]));
-			//	outputY2.setText("y:" + Float.toString(event.values[1]));
-		//		outputZ2.setText("z:" + Float.toString(event.values[2]));
+				//	System.arraycopy(event.values, 0, tempOrientation, 0, 3);
+				//	outputX2.setText("x:" + Float.toString(event.values[0]));
+				//	outputY2.setText("y:" + Float.toString(event.values[1]));
+				//		outputZ2.setText("z:" + Float.toString(event.values[2]));
 				break;
 			case Sensor.TYPE_MAGNETIC_FIELD:
-		//		System.arraycopy(event.values, 0, tempMagnetic, 0, 3);
+				//		System.arraycopy(event.values, 0, tempMagnetic, 0, 3);
 				break;
 			case Sensor.TYPE_ROTATION_VECTOR:
-                SensorManager.getRotationMatrixFromVector(mRotationMatrix , event.values);
-                /*
+				SensorManager.getRotationMatrixFromVector(mRotationMatrix , event.values);
+				/*
                 roll (rotation around z) : atan2(xy, xx)
                 pitch (rotation around y) : -arcsin(xz)
                 yaw (rotation around x) : atan2(yz,zz)
@@ -253,61 +255,36 @@ public class ExerciseActivity extends Activity implements SensorEventListener, T
                  xz8, yz9, zz10, pz11;
                  0, 0, 0, 115
                  ]
-                */
-                xangle=(float) Math.atan2(mRotationMatrix[4],mRotationMatrix[0]);
-                yangle=(float) -Math.asin(mRotationMatrix[8]);
-                zangle=(float) Math.atan2(mRotationMatrix[9],mRotationMatrix[10]);
-                outputX2.setText("x:" + Float.toString(xangle));
-    			outputY2.setText("y:" + Float.toString(yangle));
-    			outputZ2.setText("z:" + Float.toString(zangle));
-                
+				 */
+				xangle=(float) Math.atan2(mRotationMatrix[4],mRotationMatrix[0]);
+				yangle=(float) -Math.asin(mRotationMatrix[8]);
+				zangle=(float) Math.atan2(mRotationMatrix[9],mRotationMatrix[10]);
+				outputX2.setText("x:" + Float.toString(xangle));
+				outputY2.setText("y:" + Float.toString(yangle));
+				outputZ2.setText("z:" + Float.toString(zangle));
+
 				break;
 			}
 
-	/*		if (tempMagnetic[0] != -1 && tempMagnetic[1] != -1
-					&& tempMagnetic[2] != -1 && tempOrientation[0] != -1
-					&& tempOrientation[1] != -1 && tempOrientation[2] != -1 && button_pressed == 1) {
-				
+			xHist.add(xangle);
+			yHist.add(yangle); 
+			zHist.add(zangle);
 
-				SensorManager.getRotationMatrix(currentRotationM, null,
-						tempOrientation, tempMagnetic);
-
-				SensorManager.getAngleChange(angle, initialRotationM,
-						currentRotationM);*/
-				
-				//trackMovement((angle[2] * 180) / Math.PI);
-				/*
-				xHist.add(angle[0]);
-				yHist.add(angle[1]); 
-				zHist.add(angle[2]);
-				 */
-				xHist.add(xangle);
-				yHist.add(yangle); 
-				zHist.add(zangle);
-				
-				ExerciseDetect();
-				
-				//outputX3.setText("Angle X:" + Float.toString((float) ((angle[0] * 180) / Math.PI)));
-				//outputY3.setText("Angle Y:" + Float.toString((float) ((angle[1] * 180) / Math.PI)));
-				//outputZ3.setText("Angle Z:" + Float.toString((float) ((angle[2] * 180) / Math.PI)));
-
-				outputX3.setText("Angle X:" + Float.toString(movavg));
-				outputY3.setText("Angle Y:" + Float.toString(movavgmax));
-				outputZ3.setText("Angle Z:" + Float.toString(movavgmin));
-				
-				
-				if (movavg>movavgmax){
-					movavgmax=movavg;
-					}
-				if (movavg<movavgmin){
-					movavgmin=movavg;
-					}				
-				}
+			ExerciseDetect();
+			
+			if (movavg>movavgmax){
+				movavgmax=movavg;
+			}
+			if (movavg<movavgmin){
+				movavgmin=movavg;
+			}				
 		}
-	//}
+	}
+	
 
 	void ExerciseDetect ()
 	{
+
 	rangecounter=rangecounter+1;
 	CalcAngVel();
 	movavg = CalcMovAvgAngVel();
@@ -416,24 +393,15 @@ public class ExerciseActivity extends Activity implements SensorEventListener, T
     }
 	
 	
-/*	 private static final Random RANDOM = new Random();
-	    private static final String[] HELLOS = {
-	      "Hello",
-	      "Salutations",
-	      "Greetings",
-	      "Howdy",
-	      "What's crack-a-lackin?",
-	      "That explains the stench!"
-	    };
-
-	    private void sayHello() {
-	        // Select a random hello.
-	        int helloLength = HELLOS.length;
-	        String hello = HELLOS[RANDOM.nextInt(helloLength)];
-	        mTts.speak(hello,
-	            TextToSpeech.QUEUE_FLUSH,  // Drop all pending entries in the playback queue.
-	            null);
-	    }*/
+	private static final Random RANDOM = new Random();
+	private static final String[] HELLOS = {
+		"Hello",
+		"Salutations",
+		"Greetings",
+		"Howdy",
+		"What's crack-a-lackin?",
+		"That explains the stench!"
+	};
 }
 
 

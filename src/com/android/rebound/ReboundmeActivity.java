@@ -5,11 +5,13 @@ import java.util.logging.Logger;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.Toast;
 
 
 public class ReboundmeActivity extends Activity {
+	public static final String ACCESS_TOKEN = "accessToken";
 	private static String accessToken;
 	public static Logger logger = Logger.getLogger("ReboundMe");
 	
@@ -17,9 +19,21 @@ public class ReboundmeActivity extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        logger.info("Starting signin");
-        Intent signin = new Intent(this, Signin.class);
-        startActivityForResult(signin, 1);
+        
+        // get logged in status
+		SharedPreferences prefs = getPreferences(MODE_PRIVATE);
+		accessToken = prefs.getString(ACCESS_TOKEN, null);
+		
+		Intent signin;
+		if (accessToken != null) {
+			logger.info("Already signed in with token " + accessToken);
+			signin = new Intent(this, Home.class);
+			signin.putExtra(ACCESS_TOKEN, accessToken);
+		} else {
+			signin = new Intent(this, Signin.class);
+		}
+		
+		startActivityForResult(signin, 1);
     }
 
 	@Override
@@ -28,12 +42,12 @@ public class ReboundmeActivity extends Activity {
 			accessToken = data.getStringExtra("access_token");
 			logger.info("Got access token " + accessToken);
 			
-			Intent home = new Intent(this, Home.class);
+			Intent home = new Intent(this, Signin.class);
 			startActivity(home);
 		} else {
 			String error = data.getStringExtra("error");
 			Toast.makeText(this, error, Toast.LENGTH_SHORT);
-			logger.log(Level.SEVERE, error);
+			error(error);
 			finish();
 		}
 		super.onActivityResult(requestCode, resultCode, data);
@@ -53,5 +67,13 @@ public class ReboundmeActivity extends Activity {
 	
 	public static void setAuthToken(String token) {
 		accessToken = token;
+	}
+
+	public static void info(String message) {
+		logger.log(Level.INFO, message);
+	}
+	
+	public static void error(String message) {
+		logger.log(Level.SEVERE, message);
 	}
 }

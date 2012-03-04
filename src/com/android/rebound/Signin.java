@@ -16,7 +16,9 @@ import org.json.JSONTokener;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 public class Signin extends Activity {
@@ -37,7 +39,17 @@ public class Signin extends Activity {
 		Intent doSignin = new Intent(this, WebActivity.class);
 		startActivityForResult(doSignin, 1);
 	}
-
+	
+	public void doHgraph(View v) {
+		HActivity[] acts = Hgraph.getAllActivities();
+		String actsStr = new String("Activities: ");
+		for (int i=0; i < acts.length; ++i) {
+			actsStr += acts[i].toString() + ",\n";
+		}
+		Log.d("ReboundMe", actsStr);
+	}
+	
+	
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		String code = data.getStringExtra("RESULT_STRING");
