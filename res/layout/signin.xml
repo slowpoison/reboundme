@@ -2,7 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="fill_parent"
-    android:gravity="center"
+    android:background="@drawable/rebound"
+    android:gravity="bottom|center"
     android:orientation="vertical" >
 
     <Button
@@ -10,14 +11,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Sign-in Using RunKeeper"
-        android:onClick="signin" />
-
-    <Button
-        android:id="@+id/button2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Sensor Stuff"
-        android:onClick="doSensorStuff" />
+        android:onClick="signin" android:layout_gravity="bottom|right"/>
 
     <Button
         android:id="@+id/button3"
