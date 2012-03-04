@@ -28,6 +28,19 @@ public class ExerciseActivity extends Activity implements SensorEventListener, T
 	float yangle=0;
 	float xangle=0;
 	
+	private static final String[] numbers = {
+	      "One",
+	      "Two",
+	      "Three",
+	      "Four",
+	      "Five",
+	      "Six",
+	      "Seven",
+	      "Eight",
+	      "Nine",
+	      "10"
+	    };
+	
 	
     private Sensor mRotationVectorSensor;
 
@@ -41,6 +54,7 @@ public class ExerciseActivity extends Activity implements SensorEventListener, T
 	private TextToSpeech mTts;
 	private Button mAgainButton;
 	
+	int count = 0;
 	Button button;
 
 	// for accelerometer values
@@ -59,19 +73,19 @@ public class ExerciseActivity extends Activity implements SensorEventListener, T
 	TextView outputZ3;
 	
     private final float[] mRotationMatrix = new float[16];
-	float movavgnum=50;
+	float movavgnum=25;
 	float movavg=0;
 	float movavgmax=0;
 	float movavgmin=0;
 	
 	float tempsum=0;
 	float upthreshmax = (float) 0.05;
-	float upthreshmin = (float) 0.02;
+	float upthreshmin = (float) 0.01;
 	float downthreshmax = (float) -0.05;
-	float downthreshmin = (float) -0.02;
+	float downthreshmin = (float) -0.01;
 
-	boolean updetect=true;
-	boolean downdetect=false;
+	boolean updetect=false;
+	boolean downdetect=true;
 
 
 	ArrayList<Float> xHist = new ArrayList<Float>(); 
@@ -285,7 +299,7 @@ public class ExerciseActivity extends Activity implements SensorEventListener, T
 	CalcAngVel();
 	movavg = CalcMovAvgAngVel();
 	Log.d("moving average",Float.toString(movavg));
-
+/*
 	if (movavg<upthreshmax && movavg>upthreshmin && updetect==false)
 		{
 		updetect=true;
@@ -305,7 +319,46 @@ public class ExerciseActivity extends Activity implements SensorEventListener, T
 		sayHello();
 		downdetect=false;
 		//outputY3.setText("Angle Y:" + Float.toString(movavg));
-	    }
+	    }*/	
+	if (movavg < upthreshmin && movavg > upthreshmax && zangle > .9 && downdetect==true)
+		{
+		updetect = true;
+		downdetect = false;
+		mTts.speak("And",TextToSpeech.QUEUE_FLUSH, null);
+		}
+	else if (movavg > upthreshmax && zangle > .9 && downdetect==true)
+		{
+		updetect = false;
+		downdetect = false;
+		mTts.speak("Slower, Try Again",TextToSpeech.QUEUE_FLUSH, null);
+		}
+	else if (movavg > upthreshmax && zangle > .9 && downdetect==true)
+		{
+		updetect = false;
+		downdetect = false;
+		mTts.speak("Faster, Try Again",TextToSpeech.QUEUE_FLUSH, null);
+		}
+	else if (movavg < downthreshmin && movavg > downthreshmax && zangle < .3 && zangle > -.3 && updetect==true)
+		{
+		updetect = false;
+		downdetect = true;
+		count = count+1;
+		mTts.speak(numbers[count],TextToSpeech.QUEUE_FLUSH, null);
+		}
+	else if (movavg < upthreshmin && movavg > downthreshmin && zangle < .3 && zangle > -.3)
+		{
+		updetect = false;
+		downdetect = true;
+		mTts.speak("Ready",TextToSpeech.QUEUE_FLUSH, null);
+		}
+
+	
+	else if (movavg < upthreshmin && zangle < 0.05 && updetect==false)
+		{
+		mTts.speak("Now Go Down",TextToSpeech.QUEUE_FLUSH, null);
+		}
+	
+	
 	}
 
 	@Override
