@@ -24,7 +24,7 @@ public class Home extends ListActivity {
 	protected void onListItemClick(ListView l, View v, int position, long id) {
 		super.onListItemClick(l, v, position, id);
 		if (position == 0) {
-			Intent exercise = new Intent(this, ExerciseActivity.class);
+			Intent exercise = new Intent(this, ExerciseInstructions.class);
 			startActivity(exercise);
 		}
 	}

@@ -10,8 +10,8 @@ import android.widget.Toast;
 
 
 public class ReboundmeActivity extends Activity {
-	private String accessToken;
-	private Logger logger = Logger.getLogger("ReboundMe");
+	private static String accessToken;
+	public static Logger logger = Logger.getLogger("ReboundMe");
 	
     /** Called when the activity is first created. */
     @Override
@@ -45,5 +45,13 @@ public class ReboundmeActivity extends Activity {
 
 	public static String getClientSecret() {
 		return "5fe0b3b9e4324f8e94497b4ef4186f8c";
+	}
+
+	public static String getAccessToken() {
+		return accessToken;
+	}
+	
+	public static void setAuthToken(String token) {
+		accessToken = token;
 	}
 }

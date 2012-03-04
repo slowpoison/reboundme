@@ -1,9 +1,5 @@
 package com.android.rebound;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -66,7 +62,7 @@ public class Signin extends Activity {
 			req.setEntity(new UrlEncodedFormEntity(params));
 			HttpClient client = new DefaultHttpClient();
 			HttpResponse resp = client.execute(req);
-			String json = inputStreamToString(resp.getEntity().getContent());
+			String json = Helper.inputStreamToString(resp.getEntity().getContent());
 			String token = parseAccessToken(json);
 			Intent ret = new Intent();
 			ret.putExtra("access_token", token);
@@ -85,21 +81,5 @@ public class Signin extends Activity {
 		return obj.getString("access_token");
 	}
 
-	// Fast Implementation
-	private String inputStreamToString(InputStream is) throws IOException {
-	    String line = "";
-	    StringBuilder total = new StringBuilder();
-	    
-	    // Wrap a BufferedReader around the InputStream
-	    BufferedReader rd = new BufferedReader(new InputStreamReader(is));
-
-	    // Read response until the end
-	    while ((line = rd.readLine()) != null) { 
-	        total.append(line); 
-	    }
-	    
-	    // Return full string
-	    return total.toString();
-	}
 
 }
