@@ -1,7 +1,7 @@
 package com.android.rebound;
 
 import android.app.Activity;
-import android.graphics.Bitmap;
+import android.content.Intent;
 import android.os.Bundle;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -22,6 +22,7 @@ public class WebActivity extends Activity {
 		wv.loadUrl(authUrl);
 		wv.setWebViewClient(new WebViewClient() {
 
+			/*
 			@Override
 			public void onPageStarted(WebView view, String url, Bitmap favicon) {
 				// TODO Auto-generated method stub
@@ -29,12 +30,35 @@ public class WebActivity extends Activity {
 				Toast.makeText(WebActivity.this, "Starting with url " + url, Toast.LENGTH_SHORT).show();
 				wv.stopLoading();
 			}
+			*/
 
+			@Override
+			public boolean shouldOverrideUrlLoading(WebView view, String url) {
+				Toast.makeText(WebActivity.this, "Loading url " + url, Toast.LENGTH_SHORT).show();
+				if (url.startsWith("javascript")) {
+					Intent ret = new Intent();
+					String[] tokens = url.split("\\?|&|=");
+					for (int i=0; i < tokens.length; ++i) {
+						if (tokens[i].equals("code")) {
+							ret.putExtra("RESULT_STRING", tokens[i+1]);
+							Toast.makeText(WebActivity.this, "Returning " + tokens[i+1], Toast.LENGTH_SHORT).show();
+							setResult(RESULT_OK, ret);
+							finish();
+						}
+					}
+					setResult(-1);
+					finish();
+				}
+				return super.shouldOverrideUrlLoading(view, url);
+			}
+
+			/*
 			@Override
 			public void onPageFinished(WebView view, String url) {
 				super.onPageFinished(view, url);
 				Toast.makeText(WebActivity.this, "Done with url " + url, Toast.LENGTH_SHORT).show();
 			}
+			*/
 		});
 	}
 

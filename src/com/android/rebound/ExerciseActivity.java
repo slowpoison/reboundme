@@ -5,20 +5,19 @@ import java.util.Locale;
 import java.util.Random;
 
 import android.app.Activity;
-import android.content.Context;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
-import android.os.Vibrator;
 import android.speech.tts.TextToSpeech;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-public class ReboundActivity extends Activity implements SensorEventListener, TextToSpeech.OnInitListener {
+
+public class ExerciseActivity extends Activity implements SensorEventListener, TextToSpeech.OnInitListener {
 	SensorManager sensorManager = null;
 /*	private float[] initialRotationM = new float[9];
 	private float[] currentRotationM = new float[9];
@@ -359,7 +358,6 @@ public class ReboundActivity extends Activity implements SensorEventListener, Te
 	            null);
 	    }
 }
-
 
 
 
