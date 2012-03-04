@@ -52,4 +52,9 @@ public class HActivitySet {
 		}
 	}
 
+	@Override
+	public String toString() {
+		return "weight: " + weight + "\nrepetitions: " + repetitions + "\nnotes: " + notes;
+	}
+
 }

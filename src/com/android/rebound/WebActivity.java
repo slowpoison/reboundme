@@ -2,7 +2,10 @@ package com.android.rebound;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.net.http.SslError;
 import android.os.Bundle;
+import android.util.Log;
+import android.webkit.SslErrorHandler;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Toast;
@@ -31,6 +34,14 @@ public class WebActivity extends Activity {
 				wv.stopLoading();
 			}
 			*/
+
+			@Override
+			public void onReceivedSslError(WebView view,
+					SslErrorHandler handler, SslError error) {
+				Log.d("ReboundMe", error.toString());
+				Toast.makeText(WebActivity.this, "SSL error " + error.toString(), Toast.LENGTH_SHORT).show();
+				super.onReceivedSslError(view, handler, error);
+			}
 
 			@Override
 			public boolean shouldOverrideUrlLoading(WebView view, String url) {
