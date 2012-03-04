@@ -5,7 +5,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class HActivitySet {
-	private String weight, repetitions, notes;
+	private String weight, notes;
+	private int repetitions;
 
 	public String getWeight() {
 		return weight;
@@ -15,11 +16,11 @@ public class HActivitySet {
 		this.weight = weight;
 	}
 
-	public String getRepetitions() {
+	public int getRepetitions() {
 		return repetitions;
 	}
 
-	public void setRepetitions(String repetitions) {
+	public void setRepetitions(int repetitions) {
 		this.repetitions = repetitions;
 	}
 
@@ -31,7 +32,7 @@ public class HActivitySet {
 		this.notes = notes;
 	}
 
-	public HActivitySet(String weight, String repetitions, String notes) {
+	public HActivitySet(String weight, int repetitions, String notes) {
 		this.weight = weight;
 		this.repetitions = repetitions;
 		this.notes = notes;
@@ -43,7 +44,7 @@ public class HActivitySet {
 			for (int i=0; i < setsJson.length(); ++i) {
 				JSONObject o;
 				o = (JSONObject) setsJson.get(i);
-				sets[i] = new HActivitySet(o.getString("weight"), o.getString("repetitions"), o.getString("notes"));
+				sets[i] = new HActivitySet(o.getString("weight"), Integer.parseInt(o.getString("repetitions")), o.getString("notes"));
 			}
 			return sets;
 		} catch (JSONException e) {
@@ -57,4 +58,7 @@ public class HActivitySet {
 		return "weight: " + weight + "\nrepetitions: " + repetitions + "\nnotes: " + notes;
 	}
 
+	public String toJSON() {
+		return "{\"weight\":" + weight + ",\"repetitions\":" + repetitions + "}";
+	}
 }

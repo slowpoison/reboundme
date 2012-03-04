@@ -1,5 +1,7 @@
 package com.android.rebound;
 
+import java.util.Date;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONTokener;
@@ -49,7 +51,8 @@ public class HActivity {
 		this.sets = sets;
 	}
 
-	public HActivity(String exercise, String repetitions) {
+	public HActivity(String exercise, int repetitions) {
+		this.startTime = new Date().toLocaleString();
 		this.exercise = exercise;
 		this.sets = new HActivitySet[1];
 		this.sets[0] = new HActivitySet("0", repetitions, "");
@@ -61,6 +64,9 @@ public class HActivity {
 	}
 
 	public String toJSON() {
-		return "{\"start_time\": " + startTime + ",\"exercises\":[\"primary_type\":\"Other\", \"secondary_type\":" + name + "\",\"primary_muscle_group\":\"Arms\",\"sets\":[]]}";
+		return "{\"start_time\": " + startTime +
+					",\"exercises\":[\"primary_type\":\"Other\", \"secondary_type\":" +
+					name + "\",\"primary_muscle_group\":\"Shoulders\",\"sets\":["
+					+ sets[0].toJSON() + "]]}";
 	}
 }
