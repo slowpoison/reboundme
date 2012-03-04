@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.MediaController;
+import android.widget.TextView;
 import android.widget.VideoView;
 
 public class ExerciseInstructions extends Activity {
@@ -25,13 +26,20 @@ public class ExerciseInstructions extends Activity {
     	            finish();
     			}
             });
+            
+           TextView tv = (TextView) findViewById(R.id.textViewIns); 
+           
+      
+            
+            tv.setText("Instructions: \n1. Lift Arm Level \n2. Raise Arm \n3. Lower Arm  \n4. Repeat");
         
             VideoView videoView = (VideoView) findViewById(R.id.videoView1);
             MediaController mediaController = new MediaController(this);
             mediaController.setAnchorView(videoView);
-            Uri video = Uri.parse("rtsp://v5.cache1.c.youtube.com/CjYLENy73wIaLQnhycnrJQ8qmRMYESARFEIJbXYtZ29vZ2xlSARSBXdhdGNoYPj_hYjnq6uUTQw=/0/0/0/video.3gp");
-            videoView.setMediaController(mediaController);
-            videoView.setVideoURI(video);
-            videoView.start();
+            Uri video = Uri.parse("http://www.youtube.com/watch?v=PCDueAmYd1w&feature=g-upl&context=G24f7702AUAAAAAAAAAA");
+            video = Uri.parse("vnd.youtube:"  + video.getQueryParameter("v"));
+            
+            Intent intent = new Intent(Intent.ACTION_VIEW, video);
+            startActivity(intent);
         }
 }
