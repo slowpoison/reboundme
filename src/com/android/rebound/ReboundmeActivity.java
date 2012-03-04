@@ -33,7 +33,7 @@ public class ReboundmeActivity extends Activity {
 		} else {
 			String error = data.getStringExtra("error");
 			Toast.makeText(this, error, Toast.LENGTH_SHORT);
-			logger.log(Level.SEVERE, error);
+			error(error);
 			finish();
 		}
 		super.onActivityResult(requestCode, resultCode, data);
@@ -53,5 +53,13 @@ public class ReboundmeActivity extends Activity {
 	
 	public static void setAuthToken(String token) {
 		accessToken = token;
+	}
+
+	public static void info(String message) {
+		logger.log(Level.INFO, message);
+	}
+	
+	public static void error(String message) {
+		logger.log(Level.SEVERE, message);
 	}
 }

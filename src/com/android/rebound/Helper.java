@@ -4,7 +4,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.logging.Level;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -20,7 +19,7 @@ public class Helper {
 			resp = client.execute(req);
 			return inputStreamToString(resp.getEntity().getContent());
 		} catch (Exception e) {
-			ReboundmeActivity.logger.log(Level.SEVERE, e.getMessage());
+			ReboundmeActivity.error(e.getMessage());
 			return null;
 		}
 	}
