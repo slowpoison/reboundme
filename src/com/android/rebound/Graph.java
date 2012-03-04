@@ -1,37 +1,62 @@
 package com.android.rebound;
 
 import java.util.LinkedList;
+import java.util.Locale;
 
+import android.app.Activity;
 import android.graphics.Color;
+import android.os.Bundle;
+import android.speech.tts.TextToSpeech;
 
 import com.androidplot.xy.BoundaryMode;
 import com.androidplot.xy.LineAndPointFormatter;
 import com.androidplot.xy.SimpleXYSeries;
 import com.androidplot.xy.XYPlot;
 
-public class Graph {
+    
+public class Graph extends Activity {
+    
 
+	LinkedList<Number> series1Numbers;
+	LinkedList<Number> series2Numbers;
+	
     private XYPlot mySimpleXYPlot;
     private SimpleXYSeries series1;
     private SimpleXYSeries series2;
 	
+	
+	/** Called when the activity is first created. */
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+    	super.onCreate(savedInstanceState);
+        setContentView(R.layout.main);
+          
+            
+   //     TextToSpeech tts = new TextToSpeech(this, this);
+   //     tts.setLanguage(Locale.US);
+   //     tts.speak("Text to say aloud", TextToSpeech.QUEUE_ADD, null);
+    }
+
+    
+    
+    
     private void GraphValues()
     {
  
- /*   	series1Numbers=new LinkedList<Number>();
-//    	series2Numbers=new LinkedList<Number>();
+    series1Numbers=new LinkedList<Number>();
+    series2Numbers=new LinkedList<Number>();
     	
         // Turn the above arrays into XYSeries:
-        series1 = new SimpleXYSeries(series1Numbers,          // SimpleXYSeries takes a List so turn our array into a List
-                SimpleXYSeries.ArrayFormat.Y_VALS_ONLY, // Y_VALS_ONLY means use the element index as the x value
+    series1 = new SimpleXYSeries(series1Numbers,          // SimpleXYSeries takes a List so turn our array into a List
+               SimpleXYSeries.ArrayFormat.Y_VALS_ONLY, // Y_VALS_ONLY means use the element index as the x value
                 "Angle");                             // Set the display title of the series
         // Same as above, for series2
 //        series2 = new SimpleXYSeries(series2Numbers, 
 //        		SimpleXYSeries.ArrayFormat.Y_VALS_ONLY, 
 //                "Series2");
  
-        mySimpleXYPlot.getGraphWidget().getGridBackgroundPaint().setColor(Color.WHITE);
-        mySimpleXYPlot.getGraphWidget().getGridLinePaint().setColor(Color.BLACK);
+    mySimpleXYPlot.getGraphWidget().getGridBackgroundPaint().setColor(Color.WHITE);
+    mySimpleXYPlot.getGraphWidget().getGridLinePaint().setColor(Color.BLACK);
 
         
         // Create a formatter to use for drawing a series using LineAndPointRenderer:
@@ -58,7 +83,7 @@ public class Graph {
         mySimpleXYPlot.disableAllMarkup();
     }
 
-    
+    /*
     void UpdateGraphValues()
     {
     	//adjust angle
@@ -77,10 +102,10 @@ public class Graph {
     	
     	mySimpleXYPlot.redraw();
    */ 	
-    }
+    
+}    
     
     
-    
-}
+
 
 
