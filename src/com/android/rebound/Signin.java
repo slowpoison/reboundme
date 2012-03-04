@@ -31,6 +31,11 @@ public class Signin extends Activity {
 		setContentView(R.layout.signin);
 	}
 	
+	public void doSensorStuff(View v) {
+		Intent doSensorStuff = new Intent(this, ExerciseActivity.class);
+		startActivity(doSensorStuff);
+	}
+	
 	public void signin(View v) {
 //		startActivity(b);
 		Intent doSignin = new Intent(this, WebActivity.class);
