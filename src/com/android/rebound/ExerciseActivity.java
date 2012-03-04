@@ -328,7 +328,7 @@ public class ExerciseActivity extends Activity implements SensorEventListener, T
 
                 // The TTS engine has been successfully initialized.
                 // Allow the user to press the button for the app to speak again.
-                mAgainButton.setEnabled(true);
+            //    mAgainButton.setEnabled(true);
                 // Greet the user.
                 sayHello();
             }
