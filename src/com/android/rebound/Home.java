@@ -1,5 +1,7 @@
-package net.slowpoison.reboundme;
+package com.android.rebound;
 
+import net.slowpoison.reboundme.R;
+import net.slowpoison.reboundme.R.layout;
 import android.app.Activity;
 import android.os.Bundle;
 

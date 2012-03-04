@@ -1,4 +1,4 @@
-package net.slowpoison.reboundme;
+package com.android.rebound;
 
 import java.io.BufferedReader;
 import java.io.IOException;
