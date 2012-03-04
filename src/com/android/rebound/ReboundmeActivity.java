@@ -1,4 +1,4 @@
-package net.slowpoison.reboundme;
+package com.android.rebound;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -7,6 +7,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Toast;
+
 
 public class ReboundmeActivity extends Activity {
 	private String accessToken;
