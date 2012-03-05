@@ -24,6 +24,7 @@
         <activity android:name="WebActivity"></activity>
         <activity android:name="Home"></activity>
         <activity android:name="ExerciseInstructions"></activity>
+        <activity android:name="Graph"></activity>
     </application>
 
 </manifest>

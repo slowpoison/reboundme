@@ -76,10 +76,10 @@ public class ReboundmeActivity extends Activity {
 	}
 
 	public static void info(String message) {
-		logger.log(Level.INFO, message);
+		logger.log(Level.INFO, message != null ? message : "null");
 	}
 	
 	public static void error(String message) {
-		logger.log(Level.SEVERE, message);
+		logger.log(Level.SEVERE, message != null ? message : "null");
 	}
 }
