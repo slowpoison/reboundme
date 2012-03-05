@@ -46,6 +46,13 @@ public class Graph extends Activity
         					125, 135, 145, 153, 160,
         					165, 175, 180, 180, 180};
         
+        Number[] ActualROM = {35, 30, 35, 33, 35,
+        					37, 45, 50, 0, 0,
+        					0, 0, 0, 0, 0,
+        					0, 0, 0, 0, 0,
+        					0, 0, 0, 0, 0,
+        					0, 0, 0, 0, 0};
+        
         Number startdate = 1325894400000L;        
         Number[] timestamp = {0, 0, 0, 0, 0,
         			0, 0, 0, 0, 0,
@@ -61,15 +68,18 @@ public class Graph extends Activity
         ExerXYPlot = (XYPlot) findViewById(R.id.myExercises);
 
         
-        
-        
-        
+       
         // create our series from our array of nums:
-        XYSeries series2 = new SimpleXYSeries(
+        XYSeries expected = new SimpleXYSeries(
                 Arrays.asList(timestamp),
                 Arrays.asList(expectedROM),
-                "Sightings in USA");
- 
+                "Expected");
+
+        XYSeries Actual = new SimpleXYSeries(
+                Arrays.asList(timestamp),
+                Arrays.asList(ActualROM),
+                "Actual");
+        
         mySimpleXYPlot.getGraphWidget().getGridBackgroundPaint().setColor(Color.WHITE);
         mySimpleXYPlot.getGraphWidget().getGridLinePaint().setColor(Color.BLACK);
         mySimpleXYPlot.getGraphWidget().getGridLinePaint().setPathEffect(new DashPathEffect(new float[]{1,1}, 1));
@@ -84,10 +94,10 @@ public class Graph extends Activity
         
         
         // Create a formatter to use for drawing a series using LineAndPointRenderer:
-        LineAndPointFormatter series1Format = new LineAndPointFormatter(
+        LineAndPointFormatter series2Format = new LineAndPointFormatter(
                 Color.rgb(0, 100, 0),                   // line color
                 Color.rgb(0, 100, 0),                   // point color
-                Color.rgb(100, 200, 0));                // fill color
+                Color.argb(255, 0, 0, 0));                // fill color
  
  
         // setup our line fill paint to be a slightly transparent gradient:
@@ -96,10 +106,13 @@ public class Graph extends Activity
         lineFill.setShader(new LinearGradient(0, 0, 0, 250, Color.WHITE, Color.GREEN, Shader.TileMode.MIRROR));
  
         LineAndPointFormatter formatter  = new LineAndPointFormatter(Color.rgb(0, 0,0), Color.GREEN, Color.BLACK);
-        formatter.setFillPaint(lineFill);
         mySimpleXYPlot.getGraphWidget().setPaddingRight(2);
-        mySimpleXYPlot.addSeries(series2, formatter);
- 
+        mySimpleXYPlot.addSeries(expected, series2Format);
+
+        formatter.setFillPaint(lineFill);
+        mySimpleXYPlot.addSeries(Actual, formatter);
+        
+        
         // draw a domain tick for each year:
         mySimpleXYPlot.setDomainStep(XYStepMode.SUBDIVIDE, timestamp.length/5);
         mySimpleXYPlot.setRangeStep(XYStepMode.SUBDIVIDE, 11);
@@ -123,18 +136,21 @@ public class Graph extends Activity
         
         
         Number[] series3Numbers = {1, 1, 1, 1, 1,
-        							0, 0, 0, 0, 0,
-        							0, 0, 0, 0, 0,
-        							0, 0, 0, 0, 0,
-        							0, 0, 0, 0, 0,
-        							0, 0, 0, 0, 0};
+    			1, 1, 1, 0, 0,
+    			0, 0, 0, 0, 0,
+    			0, 0, 0, 0, 0,
+    			0, 0, 0, 0, 0,
+    			0, 0, 0, 0, 0};
+        
         
         // create our series from our array of nums:
         XYSeries series3 = new SimpleXYSeries(
+        		Arrays.asList(timestamp),
                 Arrays.asList(series3Numbers),
-                SimpleXYSeries.ArrayFormat.Y_VALS_ONLY,
-                "Thread #1");
+                "Days Exercised");
  
+        ExerXYPlot.setDomainValueFormat(new MyDateFormat());
+        
         ExerXYPlot.getGraphWidget().getGridBackgroundPaint().setColor(Color.WHITE);
         ExerXYPlot.getGraphWidget().getGridLinePaint().setColor(Color.BLACK);
         ExerXYPlot.getGraphWidget().getGridLinePaint().setPathEffect(new DashPathEffect(new float[]{1,1}, 1));
@@ -149,32 +165,35 @@ public class Graph extends Activity
  
         // Create a formatter to use for drawing a series using LineAndPointRenderer:
         LineAndPointFormatter series3Format = new LineAndPointFormatter(
-                Color.rgb(0, 100, 0),                   // line color
-                Color.rgb(0, 100, 0),                   // point color
-                Color.rgb(100, 200, 0));                // fill color
+                Color.rgb(0, 0, 100),                   // line color
+                Color.rgb(0, 0, 0),                   // point color
+                Color.argb(255, 255, 0, 0 ));                // fill color
  
  
         // setup our line fill paint to be a slightly transparent gradient:
         Paint lineFill3 = new Paint();
-        lineFill3.setAlpha(100);
-        lineFill3.setShader(new LinearGradient(0, 0, 0, 250, Color.WHITE, Color.RED, Shader.TileMode.MIRROR));
+        lineFill3.setAlpha(240);
+        lineFill3.setShader(new LinearGradient(0, 0, 0, 250, Color.GREEN, Color.WHITE, Shader.TileMode.MIRROR));
  
-        StepFormatter stepFormatter3  = new StepFormatter(Color.rgb(0, 0,0), Color.RED);
+        StepFormatter stepFormatter3  = new StepFormatter(Color.rgb(0, 0, 0), Color.RED);
         stepFormatter3.getLinePaint().setStrokeWidth(1);
  
+        
         stepFormatter3.getLinePaint().setAntiAlias(false);
-        stepFormatter3.setFillPaint(lineFill);
+        stepFormatter3.setFillPaint(lineFill3);
         ExerXYPlot.addSeries(series3, stepFormatter3);
  
         // adjust the domain/range ticks to make more sense; label per tick for range and label per 5 ticks domain:
         ExerXYPlot.setRangeStep(XYStepMode.INCREMENT_BY_VAL, 1);
-        ExerXYPlot.setDomainStep(XYStepMode.INCREMENT_BY_VAL, 1);
-        ExerXYPlot.setTicksPerRangeLabel(1);
-        ExerXYPlot.setTicksPerDomainLabel(5);
+        //ExerXYPlot.setDomainStep(XYStepMode.INCREMENT_BY_VAL, 1);
+        ExerXYPlot.setDomainStep(XYStepMode.SUBDIVIDE, timestamp.length/5);
+        
+        //ExerXYPlot.setTicksPerRangeLabel(1);
+        ExerXYPlot.setTicksPerDomainLabel(timestamp.length);
  
         // customize our domain/range labels
-        ExerXYPlot.setDomainLabel("Time (Secs)");
-        ExerXYPlot.setRangeLabel("Server State");
+        //ExerXYPlot.setDomainLabel("Days");
+        //ExerXYPlot.setRangeLabel("Checked!");
  
  
         // get rid of decimal points in our domain labels:
