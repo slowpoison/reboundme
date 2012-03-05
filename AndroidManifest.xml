@@ -19,7 +19,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="ExerciseActivity"></activity>
+        <activity android:name="ExerciseActivity" android:screenOrientation="portrait" android:configChanges="keyboardHidden|orientation"></activity>
         <activity android:name="Signin"></activity>
         <activity android:name="WebActivity"></activity>
         <activity android:name="Home"></activity>
