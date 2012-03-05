@@ -18,9 +18,11 @@ public class Home extends ListActivity {
 		listAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, exercises);
 		setListAdapter(listAdapter);
 		
+		/*
 		Hgraph.addActivity("Shoulder", 5);
 		Hgraph.addActivity("Shoulder", 10);
 		ReboundmeActivity.info("Added activities");
+		*/
 	}
 
 	/** Handles clicks on exercises */

@@ -349,6 +349,7 @@ public class ExerciseActivity extends Activity implements SensorEventListener,
 			mTts.speak("Well Done", TextToSpeech.QUEUE_ADD, null);
 			output.setText("Well Done");
 			
+			Hgraph.addActivity("Shoulder Rotation", count);
 			SystemClock.sleep(500);
 
 			Intent intent = new Intent(ExerciseActivity.this, Graph.class);
