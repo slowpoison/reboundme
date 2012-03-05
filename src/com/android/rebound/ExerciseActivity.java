@@ -5,11 +5,13 @@ import java.util.Locale;
 import java.util.Random;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.speech.tts.TextToSpeech;
 import android.util.Log;
 import android.view.View;
@@ -75,6 +77,7 @@ public class ExerciseActivity extends Activity implements SensorEventListener, T
 	TextView outputY3;
 	TextView outputZ3;
 	
+	TextView output;
 
 	private final float[] mRotationMatrix = new float[16];
 	float movavgnum=100;
@@ -91,7 +94,8 @@ public class ExerciseActivity extends Activity implements SensorEventListener, T
 	boolean updetect=false;
 	boolean downdetect=false;
 	boolean reset=true;
-
+	boolean end=false;
+	
 	ArrayList<Float> xHist = new ArrayList<Float>(); 
 	ArrayList<Float> yHist = new ArrayList<Float>();
 	ArrayList<Float> zHist = new ArrayList<Float>();
@@ -173,7 +177,7 @@ public class ExerciseActivity extends Activity implements SensorEventListener, T
 		//		tempOrientation[0] = tempOrientation[1] = tempOrientation[2] = -1;
 
 		// just some textviews, for data output
-		outputX = (TextView) findViewById(R.id.textView1);
+		/*outputX = (TextView) findViewById(R.id.textView1);
 		outputY = (TextView) findViewById(R.id.textView2);
 		outputZ = (TextView) findViewById(R.id.textView3);
 
@@ -183,7 +187,10 @@ public class ExerciseActivity extends Activity implements SensorEventListener, T
 
 		outputX3 = (TextView) findViewById(R.id.textView7);
 		outputY3 = (TextView) findViewById(R.id.textView8);
-		outputZ3 = (TextView) findViewById(R.id.textView9);
+		outputZ3 = (TextView) findViewById(R.id.textView9);*/
+		
+		output = (TextView) findViewById(R.id.counter);
+		
 	}
 
 	@Override
@@ -289,7 +296,7 @@ public class ExerciseActivity extends Activity implements SensorEventListener, T
 	CalcAngVel();
 	movavg = CalcMovAvgAngVel();
 	
-	Log.d("moving average",Float.toString(movavg));
+	//Log.d("moving average",Float.toString(movavg));
 /*
 	if (movavg<upthreshmax && movavg>upthreshmin && updetect==false)
 		{
@@ -312,7 +319,7 @@ public class ExerciseActivity extends Activity implements SensorEventListener, T
 		//outputY3.setText("Angle Y:" + Float.toString(movavg));
 	    }*/	
 	
-	if (zangle > .9 && downdetect==true && reset==false)
+	if (zangle > .9 && downdetect==true && reset==false && end==false)
 		{
 		updetect = true;
 		downdetect = false;
@@ -329,27 +336,30 @@ public class ExerciseActivity extends Activity implements SensorEventListener, T
 			}
 		}
 
-	else if (zangle < .3 && zangle > -.3 && updetect==true && reset==false)
+	else if (zangle < .3 && zangle > -.3 && updetect==true && reset==false && end==false)
 		{
 		updetect = false;
 		downdetect = true;		
 		if (movavg < downthreshmin && movavg > downthreshmax)	{	
 			mTts.speak(numbers[count],TextToSpeech.QUEUE_ADD, null);
+			output.setText(numbers[count]);
 			count=count+1;
 			}
 		else if (movavg > downthreshmin){
 			//mTts.speak("Faster",TextToSpeech.QUEUE_ADD, null);
 			mTts.speak(numbers[count],TextToSpeech.QUEUE_ADD, null);
+			output.setText(numbers[count]);
 			count=count+1;
 			}
 		else if (movavg < downthreshmax){
 			//mTts.speak("Slower",TextToSpeech.QUEUE_ADD, null);
 			mTts.speak(numbers[count],TextToSpeech.QUEUE_ADD, null);
+			output.setText(numbers[count]);
 			count=count+1;
 			}
 		}
 	
-	else if (zangle < .3 && zangle > -.3 && reset==true )
+	else if (zangle < .3 && zangle > -.3 && reset==true && end==false)
 		{
 		updetect = false;
 		downdetect = true;
@@ -358,8 +368,22 @@ public class ExerciseActivity extends Activity implements SensorEventListener, T
 			reset = false;
 			}
 		}	
+	
+	
+	if (count>4){
+		end = true;
+		SystemClock.sleep(500);
+		mTts.speak("Well Done",TextToSpeech.QUEUE_ADD, null);
+		output.setText("Well Done");
+		
+		SystemClock.sleep(500);
+		///////////
+		Intent intent = new Intent(this, Graph.class);
+        startActivity(intent); 
+		///////////
+		
+		}
 	}
-
 	
 	
 	@Override

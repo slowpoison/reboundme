@@ -2,8 +2,9 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
+    android:background="@drawable/rebound_2">
     android:orientation="vertical" >
-
+<!--
     <TextView
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -68,5 +69,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="TextView" />
-
+-->
+    <TextView
+        android:id="@+id/counter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="30sp"
+        android:textColor="#FFFFFF"
+        android:textStyle="bold"
+    	android:typeface="sans"
+        android:gravity="center_vertical|center_horizontal"
+        android:text="Ready!" />
 </LinearLayout>
