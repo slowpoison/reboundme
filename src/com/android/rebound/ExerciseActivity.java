@@ -57,13 +57,13 @@ public class ExerciseActivity extends Activity implements SensorEventListener, T
 	private static final String TAG = "TextToSpeechDemo";
 
 	private TextToSpeech mTts;
-	private Button mAgainButton;
+	//private Button mAgainButton;
 
 	int count = 0;
-	Button button;
+//	Button button;
 
 	// for accelerometer values
-	TextView outputX;
+	/*TextView outputX;
 	TextView outputY;
 	TextView outputZ;
 
@@ -75,7 +75,7 @@ public class ExerciseActivity extends Activity implements SensorEventListener, T
 	// for angle delta values
 	TextView outputX3;
 	TextView outputY3;
-	TextView outputZ3;
+	TextView outputZ3;*/
 	
 	TextView output;
 
@@ -143,7 +143,7 @@ public class ExerciseActivity extends Activity implements SensorEventListener, T
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.main);
+		//setContentView(R.layout.main);
 
 		sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
 		setContentView(R.layout.main);
@@ -159,7 +159,7 @@ public class ExerciseActivity extends Activity implements SensorEventListener, T
 
 				//v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
 
-		button = (Button) findViewById(R.id.button1);
+/*		button = (Button) findViewById(R.id.button1);
 		button_pressed = 0;
 		button.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
@@ -169,9 +169,9 @@ public class ExerciseActivity extends Activity implements SensorEventListener, T
 					SensorManager.getRotationMatrix(initialRotationM, null,
 							tempOrientation, tempMagnetic);
 					button_pressed = 1;
-				}*/
+				}
 			}
-		});
+		});*/
 
 		//		tempMagnetic[0] = tempMagnetic[1] = tempMagnetic[2] = -1;
 		//		tempOrientation[0] = tempOrientation[1] = tempOrientation[2] = -1;
@@ -237,9 +237,9 @@ public class ExerciseActivity extends Activity implements SensorEventListener, T
 		synchronized (this) {
 			switch (event.sensor.getType()) {
 			case Sensor.TYPE_ACCELEROMETER:
-				outputX.setText("x:" + Float.toString(event.values[0]));
-				outputY.setText("y:" + Float.toString(event.values[1]));
-				outputZ.setText("z:" + Float.toString(event.values[2]));
+				//outputX.setText("x:" + Float.toString(event.values[0]));
+				//outputY.setText("y:" + Float.toString(event.values[1]));
+				///outputZ.setText("z:" + Float.toString(event.values[2]));
 				break;
 			case Sensor.TYPE_ORIENTATION:
 				//	System.arraycopy(event.values, 0, tempOrientation, 0, 3);
@@ -266,9 +266,9 @@ public class ExerciseActivity extends Activity implements SensorEventListener, T
 				xangle=(float) Math.atan2(mRotationMatrix[4],mRotationMatrix[0]);
 				yangle=(float) -Math.asin(mRotationMatrix[8]);
 				zangle=(float) Math.atan2(mRotationMatrix[9],mRotationMatrix[10]);
-				outputX2.setText("x:" + Float.toString(xangle));
-				outputY2.setText("y:" + Float.toString(yangle));
-				outputZ2.setText("z:" + Float.toString(zangle));
+				//outputX2.setText("x:" + Float.toString(xangle));
+				//outputY2.setText("y:" + Float.toString(yangle));
+				//outputZ2.setText("z:" + Float.toString(zangle));
 
 				break;
 			}

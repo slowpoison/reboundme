@@ -95,7 +95,7 @@ public class Graph extends Activity
         lineFill.setAlpha(200);
         lineFill.setShader(new LinearGradient(0, 0, 0, 250, Color.WHITE, Color.GREEN, Shader.TileMode.MIRROR));
  
-        LineAndPointFormatter formatter  = new LineAndPointFormatter(Color.rgb(0, 0,0), Color.BLUE, Color.RED);
+        LineAndPointFormatter formatter  = new LineAndPointFormatter(Color.rgb(0, 0,0), Color.GREEN, Color.BLACK);
         formatter.setFillPaint(lineFill);
         mySimpleXYPlot.getGraphWidget().setPaddingRight(2);
         mySimpleXYPlot.addSeries(series2, formatter);
@@ -156,10 +156,10 @@ public class Graph extends Activity
  
         // setup our line fill paint to be a slightly transparent gradient:
         Paint lineFill3 = new Paint();
-        lineFill3.setAlpha(200);
-        lineFill3.setShader(new LinearGradient(0, 0, 0, 250, Color.WHITE, Color.BLUE, Shader.TileMode.MIRROR));
+        lineFill3.setAlpha(100);
+        lineFill3.setShader(new LinearGradient(0, 0, 0, 250, Color.WHITE, Color.RED, Shader.TileMode.MIRROR));
  
-        StepFormatter stepFormatter3  = new StepFormatter(Color.rgb(0, 0,0), Color.BLUE);
+        StepFormatter stepFormatter3  = new StepFormatter(Color.rgb(0, 0,0), Color.RED);
         stepFormatter3.getLinePaint().setStrokeWidth(1);
  
         stepFormatter3.getLinePaint().setAntiAlias(false);
