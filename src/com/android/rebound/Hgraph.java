@@ -34,13 +34,17 @@ public class Hgraph {
 	
 	public static void addActivity(String exercise, int repetitions) {
 		HActivity act = new HActivity(exercise, repetitions);
-		Helper.httpPost(newHttpPost("strengthTrainingActivities"), act.toJSON());
+		ReboundmeActivity.info("activities json " + act.toJSON() + " " + act.toJSON().length());
+		String resp = Helper.httpPost(newHttpPost("strengthTrainingActivities",
+				"application/vnd.com.runkeeper.NewStrengthTrainingActivity+json"), act.toJSON());
+		ReboundmeActivity.info(resp);
 	}
 
 	
-	private static HttpPost newHttpPost(String url) {
-		HttpPost req = new HttpPost(url);
+	private static HttpPost newHttpPost(String url, String contentType) {
+		HttpPost req = new HttpPost("http://api.runkeeper.com/" + url);
 		addMandatoryHeaders(req);
+		req.addHeader("Content-Type", contentType);
 		
 		/*
 		List<NameValuePair> params = new ArrayList<NameValuePair>();

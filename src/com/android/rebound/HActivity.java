@@ -1,6 +1,8 @@
 package com.android.rebound;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -8,7 +10,6 @@ import org.json.JSONTokener;
 
 public class HActivity {
 	private String startTime, notes, exercise;
-	private String name;
 	private HActivitySet[] sets;
 	
 	public HActivity(String actJson) {
@@ -20,7 +21,6 @@ public class HActivity {
 			JSONObject exerciseObj = (JSONObject) act.getJSONArray("exercises").get(0);
 			exercise = exerciseObj.getString("secondary_type");
 			sets = HActivitySet.parse(exerciseObj.getJSONArray("sets"));
-			name = exerciseObj.getString("secondary_type");
 		} catch (JSONException e) {
 			ReboundmeActivity.error(e.getMessage());
 		}
@@ -52,7 +52,9 @@ public class HActivity {
 	}
 
 	public HActivity(String exercise, int repetitions) {
-		this.startTime = new Date().toLocaleString();
+//		this.startTime = "Sun, 4 Mar 2012 16:57:10";
+		SimpleDateFormat sdf = new SimpleDateFormat("E, d MMM yyyy HH:mm:ss", Locale.US);
+		this.startTime = sdf.format(new Date(0));
 		this.exercise = exercise;
 		this.sets = new HActivitySet[1];
 		this.sets[0] = new HActivitySet("0", repetitions, "");
@@ -64,9 +66,9 @@ public class HActivity {
 	}
 
 	public String toJSON() {
-		return "{\"start_time\": " + startTime +
-					",\"exercises\":[\"primary_type\":\"Other\", \"secondary_type\":" +
-					name + "\",\"primary_muscle_group\":\"Shoulders\",\"sets\":["
-					+ sets[0].toJSON() + "]]}";
+		return "{\"start_time\":\"" + startTime + "\",\"notes\":\"" + notes +
+					"\",\"exercises\":[{\"primary_type\":\"Other\", \"secondary_type\":\"" +
+					exercise + "\",\"primary_muscle_group\":\"Shoulders\",\"sets\":["
+					+ sets[0].toJSON() + "]}]}";
 	}
 }

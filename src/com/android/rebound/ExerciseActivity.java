@@ -289,7 +289,7 @@ public class ExerciseActivity extends Activity implements SensorEventListener, T
 	CalcAngVel();
 	movavg = CalcMovAvgAngVel();
 	
-	Log.d("moving average",Float.toString(movavg));
+//	Log.d("moving average",Float.toString(movavg));
 /*
 	if (movavg<upthreshmax && movavg>upthreshmin && updetect==false)
 		{

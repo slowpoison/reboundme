@@ -20,6 +20,7 @@ public class Home extends ListActivity {
 		
 		Hgraph.addActivity("Shoulder", 5);
 		Hgraph.addActivity("Shoulder", 10);
+		ReboundmeActivity.info("Added activities");
 	}
 
 	/** Handles clicks on exercises */
