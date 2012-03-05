@@ -2,20 +2,22 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" android:background="@drawable/rebound_2">
+    android:background="@drawable/rebound_2"
+    android:orientation="vertical" >
 
     <TextView
         android:id="@+id/textViewIns"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="2.14"
+        android:layout_height="281dp"
+        android:layout_weight="0.18"
         android:text="TextView" />
 
-    <VideoView
-        android:id="@+id/videoView1"
-        android:layout_width="match_parent"
-        android:layout_height="212dp"
-        android:layout_weight="0.98" />
+    <Button
+        android:id="@+id/buttonImage"
+        android:layout_width="104dp"
+        android:layout_height="101dp"
+        android:background="@drawable/images"
+        android:text="Button" android:layout_gravity="center"/>
 
     <Button
         android:id="@+id/button2"
