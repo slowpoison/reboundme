@@ -315,12 +315,12 @@ public class ExerciseActivity extends Activity implements SensorEventListener,
 			}
 		}
 
-		if (count > 4) {
+		if (count > 4 && end == false) {
 			end = true;
 			SystemClock.sleep(500);
 			mTts.speak("Well Done", TextToSpeech.QUEUE_ADD, null);
 			output.setText("Well Done");
-
+			
 			SystemClock.sleep(500);
 
 			Intent intent = new Intent(ExerciseActivity.this, Graph.class);
