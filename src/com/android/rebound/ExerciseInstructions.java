@@ -2,6 +2,7 @@ package com.android.rebound;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.hardware.SensorManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
@@ -29,17 +30,21 @@ public class ExerciseInstructions extends Activity {
             
            TextView tv = (TextView) findViewById(R.id.textViewIns); 
            
-      
-            
-            tv.setText("Instructions: \n1. Lift Arm Level \n2. Raise Arm \n3. Lower Arm  \n4. Repeat");
+           tv.setText("Instructions: \n1. Lift Arm Level \n2. Raise Arm \n3. Lower Arm  \n4. Repeat");
         
-            VideoView videoView = (VideoView) findViewById(R.id.videoView1);
-            MediaController mediaController = new MediaController(this);
-            mediaController.setAnchorView(videoView);
-            Uri video = Uri.parse("http://www.youtube.com/watch?v=PCDueAmYd1w&feature=g-upl&context=G24f7702AUAAAAAAAAAA");
-            video = Uri.parse("vnd.youtube:"  + video.getQueryParameter("v"));
-            
-            Intent intent = new Intent(Intent.ACTION_VIEW, video);
-            startActivity(intent);
+           Button but = (Button) findViewById(R.id.buttonImage);
+           
+          
+           
+           but.setOnClickListener(new View.OnClickListener() {
+   			public void onClick(View v) {
+   			 Uri video = Uri.parse("http://www.youtube.com/watch?v=PCDueAmYd1w&feature=g-upl&context=G24f7702AUAAAAAAAAAA");
+             video = Uri.parse("vnd.youtube:"  + video.getQueryParameter("v"));
+   				Intent intent = new Intent(Intent.ACTION_VIEW, video);
+   				startActivity(intent);
+   				}
+   			});
+           
+          
         }
 }

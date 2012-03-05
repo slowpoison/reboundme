@@ -6,12 +6,22 @@
     >
  
     <com.androidplot.xy.XYPlot
-    android:id="@+id/mySimpleXYPlot"
+    android:id="@+id/myRangeOfMotionPlot"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:layout_marginTop="10px"
+    android:layout_height="400px"
+    android:layout_marginTop="0px"
     android:layout_marginLeft="0px"
     android:layout_marginRight="0px"
-    title="Yearly UFO Sightings"
+    title="Recovery Phase"
     />
+        <com.androidplot.xy.XYPlot
+    android:id="@+id/myExercises"
+    android:layout_width="fill_parent"
+    android:layout_height="200px"
+    android:layout_marginTop="0px"
+    android:layout_marginLeft="0px"
+    android:layout_marginRight="0px"
+    title="Exercises"
+    />
+    
 </LinearLayout>
