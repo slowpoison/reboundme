@@ -3,7 +3,7 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:background="@drawable/rebound_2"
-    android:orientation="vertical" >
+    android:orientation="vertical">
 <!--
     <TextView
         android:layout_width="fill_parent"
@@ -70,14 +70,16 @@
         android:layout_height="wrap_content"
         android:text="TextView" />
 -->
+
     <TextView
         android:id="@+id/counter"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="30sp"
+        android:gravity="center_horizontal|center_vertical|clip_vertical"
+        android:text="Ready!"
         android:textColor="#000000"
+        android:textSize="30sp"
         android:textStyle="bold"
-    	android:typeface="sans"
-        android:gravity="center_vertical|center_horizontal"
-        android:text="Ready!" />
+        android:typeface="sans" android:layout_marginTop="225sp" android:layout_marginLeft="100sp"/>
+
 </LinearLayout>
