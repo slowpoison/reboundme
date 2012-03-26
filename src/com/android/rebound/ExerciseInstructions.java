@@ -44,7 +44,5 @@ public class ExerciseInstructions extends Activity {
    				startActivity(intent);
    				}
    			});
-           
-          
         }
 }

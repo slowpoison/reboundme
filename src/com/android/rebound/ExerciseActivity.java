@@ -61,7 +61,6 @@ public class ExerciseActivity extends Activity implements SensorEventListener,
 	 * // for angle delta values TextView outputX3; TextView outputY3; TextView
 	 * outputZ3;
 	 */
-
 	TextView output;
 
 	private final float[] mRotationMatrix = new float[16];
@@ -352,8 +351,8 @@ public class ExerciseActivity extends Activity implements SensorEventListener,
 			Hgraph.addActivity("Shoulder Rotation", count);
 			SystemClock.sleep(500);
 
-			Intent intent = new Intent(ExerciseActivity.this, Graph.class);
-			startActivity(intent);
+			//Intent intent = new Intent(ExerciseActivity.this, Graph.class);
+			//startActivity(intent);
 
 		}
 	}

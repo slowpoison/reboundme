@@ -48,8 +48,9 @@ public class ReboundmeActivity extends Activity {
 			e.putString(ACCESS_TOKEN, accessToken);
 			e.commit();
 			
-			Intent home = new Intent(this, Home.class);
-			startActivity(home);
+			//Intent home = new Intent(this, Home.class);
+			//startActivity(home);
+			
 		} else {
 			String error = data.getStringExtra("error");
 			Toast.makeText(this, error, Toast.LENGTH_LONG);
