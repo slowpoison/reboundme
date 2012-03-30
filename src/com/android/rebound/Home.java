@@ -14,9 +14,10 @@ public class Home extends ListActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-//		setContentView(R.layout.home);
+		//setContentView(R.layout.home);
 		listAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, exercises);
 		setListAdapter(listAdapter);
+		
 		
 		/*
 		Hgraph.addActivity("Shoulder", 5);
