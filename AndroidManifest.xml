@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.android.rebound"
+    package="me.wingspan.rebound.android"
     android:versionCode="1"
     android:versionName="1.0" >
     <uses-sdk android:minSdkVersion="10" />
@@ -22,7 +22,7 @@
         <activity android:name="ExerciseActivity" android:screenOrientation="portrait" android:configChanges="keyboardHidden|orientation"></activity>
         <activity android:name="Signin"></activity>
         <activity android:name="WebActivity"></activity>
-        <activity android:name="Home"></activity>
+        <activity android:name="Home" android:screenOrientation="portrait" android:configChanges="keyboardHidden|orientation"></activity>
         <activity android:name="ExerciseInstructions"></activity>
         <activity android:name="Graph"></activity>
     </application>

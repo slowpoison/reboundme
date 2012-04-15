@@ -1,4 +1,4 @@
-package com.android.rebound;
+package me.wingspan.rebound.android;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -9,6 +9,7 @@ import android.webkit.SslErrorHandler;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Toast;
+
 
 public class WebActivity extends Activity {
 //	private Uri authUrl = Uri.parse("https://runkeeper.com/apps/authorize?client_id=bdf6d860d6964992a766c4405d7e5638&response_type=code&redirect_uri=javascript:window.close()");

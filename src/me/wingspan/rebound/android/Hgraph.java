@@ -1,4 +1,4 @@
-package com.android.rebound;
+package me.wingspan.rebound.android;
 
 import org.apache.http.HttpRequest;
 import org.apache.http.client.methods.HttpGet;

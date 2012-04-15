@@ -1,4 +1,4 @@
-package com.android.rebound;
+package me.wingspan.rebound.android;
 
 import android.app.ListActivity;
 import android.content.Intent;

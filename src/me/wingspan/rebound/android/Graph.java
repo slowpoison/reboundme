@@ -1,4 +1,4 @@
-package com.android.rebound;
+package me.wingspan.rebound.android;
 
 import java.text.DecimalFormat;
 import java.text.FieldPosition;

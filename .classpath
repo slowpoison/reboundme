@@ -1,10 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="src" path="gen"/>
 	<classpathentry kind="con" path="com.android.ide.eclipse.adt.ANDROID_FRAMEWORK"/>
 	<classpathentry kind="con" path="com.android.ide.eclipse.adt.LIBRARIES"/>
-	<classpathentry kind="lib" path="Androidplot-core-0.4.4-release.jar"/>
-	<classpathentry kind="lib" path="Androidplot-core-0.4.4-sources.jar"/>
+	<classpathentry kind="src" path="gen"/>
+	<classpathentry kind="lib" path="lib/Androidplot-core-0.4.4-release.jar"/>
+	<classpathentry kind="lib" path="lib/Androidplot-core-0.4.4-sources.jar"/>
+	<classpathentry kind="lib" path="lib/org.apache.commons.logging.jar"/>
+	<classpathentry kind="lib" path="lib/org.apache.httpclient.jar"/>
+	<classpathentry kind="lib" path="lib/org.apache.httpcore.jar"/>
+	<classpathentry kind="lib" path="lib/org.codehaus.jackson.core.jar"/>
+	<classpathentry kind="lib" path="lib/org.codehaus.jackson.mapper.jar"/>
+	<classpathentry kind="lib" path="lib/org.restlet.ext.httpclient.jar"/>
+	<classpathentry kind="lib" path="lib/org.restlet.ext.jackson.jar"/>
+	<classpathentry kind="lib" path="lib/org.restlet.jar"/>
+	<classpathentry kind="lib" path="lib/me.wingspan.client.android.jar"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>

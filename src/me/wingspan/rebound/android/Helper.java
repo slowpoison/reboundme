@@ -1,4 +1,4 @@
-package com.android.rebound;
+package me.wingspan.rebound.android;
 
 import java.io.BufferedReader;
 import java.io.IOException;

@@ -1,11 +1,19 @@
-package com.android.rebound;
+package me.wingspan.rebound.android;
 
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.Locale;
-import java.util.Random;
+
+import me.wingspan.XSession;
+import me.wingspan.client.AsyncCallback;
+import me.wingspan.client.WingspanServiceAsync;
+
+import org.restlet.engine.Engine;
+import org.restlet.engine.connector.HttpClientHelper;
+import org.restlet.ext.jackson.JacksonConverter;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -14,8 +22,6 @@ import android.os.Bundle;
 import android.os.SystemClock;
 import android.speech.tts.TextToSpeech;
 import android.util.Log;
-import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 
 public class ExerciseActivity extends Activity implements SensorEventListener,
@@ -32,6 +38,8 @@ public class ExerciseActivity extends Activity implements SensorEventListener,
 	float xangle = 0;
 
 	int rangecounter = 0;
+	WingspanServiceAsync s = WingspanServiceAsync.getDefaultService();
+//	WingspanServiceAsync s = new WingspanServiceAsync("172.16.1.4:3001", "");
 
 	private static final String[] numbers = { "One", "Two", "Three", "Four",
 			"Five", "Six", "Seven", "Eight", "Nine", "Ten" };
@@ -127,6 +135,12 @@ public class ExerciseActivity extends Activity implements SensorEventListener,
 		super.onCreate(savedInstanceState);
 		// setContentView(R.layout.main);
 
+		Engine.getInstance().getRegisteredConverters().clear();
+		Engine.getInstance().getRegisteredConverters().add(new JacksonConverter());
+
+		Engine.getInstance().getRegisteredClients().clear();
+		Engine.getInstance().getRegisteredClients().add(new HttpClientHelper(null));
+		
 		sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
 		setContentView(R.layout.main);
 
@@ -210,8 +224,6 @@ public class ExerciseActivity extends Activity implements SensorEventListener,
 
 	@Override
 	public void onSensorChanged(SensorEvent event) {
-		// TODO Auto-generated method stub
-
 		synchronized (this) {
 			switch (event.sensor.getType()) {
 			case Sensor.TYPE_ACCELEROMETER:
@@ -265,15 +277,13 @@ public class ExerciseActivity extends Activity implements SensorEventListener,
 	}
 	
 
-	void ExerciseDetect ()
-	{
+	void ExerciseDetect() {
+		rangecounter=rangecounter+1;
+		CalcAngVel();
+		movavg = CalcMovAvgAngVel();
 
-	rangecounter=rangecounter+1;
-	CalcAngVel();
-	movavg = CalcMovAvgAngVel();
-	
-//	Log.d("moving average",Float.toString(movavg));
-/*
+		//	Log.d("moving average",Float.toString(movavg));
+		/*
 	if (movavg<upthreshmax && movavg>upthreshmin && updetect==false)
 		{
 		updetect=true;
@@ -294,67 +304,82 @@ public class ExerciseActivity extends Activity implements SensorEventListener,
 		downdetect=false;
 		//outputY3.setText("Angle Y:" + Float.toString(movavg));
 	    }*/	
-	
-	if (zangle > .9 && downdetect==true && reset==false)
-		{
-		updetect = true;
-		downdetect = false;
-		if (movavg > upthreshmin && movavg < upthreshmax)	{	
-			mTts.speak("And",TextToSpeech.QUEUE_ADD, null);
-			}
-		else if (movavg < upthreshmin){
-			//mTts.speak("Faster",TextToSpeech.QUEUE_ADD, null);
-			mTts.speak("And",TextToSpeech.QUEUE_ADD, null);
-			}
-		else if (movavg > upthreshmax){
-			//mTts.speak("Slower",TextToSpeech.QUEUE_ADD, null);
-			mTts.speak("And",TextToSpeech.QUEUE_ADD, null);
-			}
-		}
 
-		else if (zangle < .3 && zangle > -.3 && updetect == true
+		if (zangle > .9 && downdetect==true && reset==false) {
+			updetect = true;
+			downdetect = false;
+			if (movavg > upthreshmin && movavg < upthreshmax)	{	
+				speak("And",TextToSpeech.QUEUE_ADD, null);
+			}
+			else if (movavg < upthreshmin){
+				//speak("Faster",TextToSpeech.QUEUE_ADD, null);
+				speak("And",TextToSpeech.QUEUE_ADD, null);
+			}
+			else if (movavg > upthreshmax){
+				//speak("Slower",TextToSpeech.QUEUE_ADD, null);
+				speak("And",TextToSpeech.QUEUE_ADD, null);
+			}
+		} else if (zangle < .3 && zangle > -.3 && updetect == true
 				&& reset == false && end == false) {
 			updetect = false;
 			downdetect = true;
 			if (movavg < downthreshmin && movavg > downthreshmax) {
-				mTts.speak(numbers[count], TextToSpeech.QUEUE_ADD, null);
+				speak(numbers[count], TextToSpeech.QUEUE_ADD, null);
 				output.setText(numbers[count]);
 				count = count + 1;
 			} else if (movavg > downthreshmin) {
-				// mTts.speak("Faster",TextToSpeech.QUEUE_ADD, null);
-				mTts.speak(numbers[count], TextToSpeech.QUEUE_ADD, null);
+				// speak("Faster",TextToSpeech.QUEUE_ADD, null);
+				speak(numbers[count], TextToSpeech.QUEUE_ADD, null);
 				output.setText(numbers[count]);
 				count = count + 1;
 			} else if (movavg < downthreshmax) {
-				// mTts.speak("Slower",TextToSpeech.QUEUE_ADD, null);
-				mTts.speak(numbers[count], TextToSpeech.QUEUE_ADD, null);
+				// speak("Slower",TextToSpeech.QUEUE_ADD, null);
+				speak(numbers[count], TextToSpeech.QUEUE_ADD, null);
 				output.setText(numbers[count]);
 				count = count + 1;
 			}
-		}
-
-		else if (zangle < .3 && zangle > -.3 && reset == true && end == false) {
+		} else if (zangle < .3 && zangle > -.3 && reset == true && end == false) {
 			updetect = false;
 			downdetect = true;
 			if (movavg < upthreshmin && movavg > downthreshmin) {
-				mTts.speak("Ready", TextToSpeech.QUEUE_ADD, null);
+				speak("Ready", TextToSpeech.QUEUE_ADD, null);
 				reset = false;
 			}
 		}
 
-		if (count > 4 && end == false) {
+		if (count > 0 && end == false) {
 			end = true;
-			SystemClock.sleep(500);
-			mTts.speak("Well Done", TextToSpeech.QUEUE_ADD, null);
+//			SystemClock.sleep(500);
+			speak("Well Done", TextToSpeech.QUEUE_ADD, null);
 			output.setText("Well Done");
 			
-			Hgraph.addActivity("Shoulder Rotation", count);
+			Float[][] readings = new Float[1][];
+			readings[0] = new Float[xHist.size()];
+			for (int i=0; i < xHist.size(); ++i)
+				readings[0][i] = xHist.get(i);
+			s.newExerciseSessionRaw(new XSession(1, new Date(), readings), new AsyncCallback<Void>() {
+				@Override
+				public void failure() {
+					// TODO Auto-generated method stub
+					
+				}
+				@Override
+				public void success(Void arg0) {
+					// TODO Auto-generated method stub
+					
+				}
+			});
+			
 			SystemClock.sleep(500);
 
 			//Intent intent = new Intent(ExerciseActivity.this, Graph.class);
 			//startActivity(intent);
 
 		}
+	}
+
+	private void speak(String text, int queueMode, HashMap<String,String> params) {
+//		mTts.speak(text, queueMode, params);
 	}
 
 	@Override
@@ -366,7 +391,7 @@ public class ExerciseActivity extends Activity implements SensorEventListener,
 			// indicate this.
 			int result = mTts.setLanguage(Locale.US);
 			// Try this someday for some interesting results.
-			// int result mTts.setLanguage(Locale.FRANCE);
+			// int result setLanguage(Locale.FRANCE);
 			if (result == TextToSpeech.LANG_MISSING_DATA
 					|| result == TextToSpeech.LANG_NOT_SUPPORTED) {
 				// Lanuage data is missing or the language is not supported.
@@ -389,7 +414,6 @@ public class ExerciseActivity extends Activity implements SensorEventListener,
 		}
 	}
 
-	private static final Random RANDOM = new Random();
 	private static final String[] HELLOS = { "Hello", "Salutations",
 			"Greetings", "Howdy", "What's crack-a-lackin?",
 			"That explains the stench!" };

@@ -1,4 +1,4 @@
-package com.android.rebound;
+package me.wingspan.rebound.android;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -21,6 +21,10 @@ public class ReboundmeActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         
+        Intent home = new Intent(this, Home.class);
+        startActivity(home);
+        
+        /*
         // get logged in status
 		SharedPreferences prefs = getPreferences(MODE_PRIVATE);
 		accessToken = prefs.getString(ACCESS_TOKEN, null);
@@ -35,6 +39,7 @@ public class ReboundmeActivity extends Activity {
 		}
 		
 		startActivityForResult(signin, 1);
+		*/
     }
 
 	@Override

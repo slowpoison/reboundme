@@ -1,4 +1,4 @@
-package com.android.rebound;
+package me.wingspan.rebound.android;
 
 import org.json.JSONArray;
 import org.json.JSONException;
